@@ -1,0 +1,29 @@
+version: 0.2
+phases:
+  install:
+    runtime-versions:
+        nodejs: 20
+    commands:
+      - echo "Installing dependencies..."
+      - npm install
+      
+  pre_build:
+    commands:
+      - echo "Running pre-build steps..."   
+
+  build:
+    commands:
+      - echo "Packaging Lambda function..."
+      - zip -r whales_secured.zip .
+
+  post_build:
+    commands:
+      - echo "Deploying to AWS Lambda..."
+      - aws lambda update-function-code --function-name whales_secured --zip-file fileb://whales_secured.zip
+      - echo "Deployment completed."
+      
+artifacts:
+  type: zip
+  files:
+    - whales_secured.zip 
+    - outputtemplate.yaml
