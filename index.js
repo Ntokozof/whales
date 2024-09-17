@@ -91,9 +91,7 @@ export const handler = async (event) => {
          statusCode: 404,
          body: JSON.stringify({ message: "404 nothing found "   })
        };
-    
     }
-  
     return response;
   };
   
