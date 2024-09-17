@@ -17,7 +17,7 @@ export const handler = async (event) => {
     else if (path === '/whales_secured' && httpMethod === 'GET') {
       response = {
         statusCode: 200,
-        //sample data
+        //sample data test
         body: JSON.stringify({ 
             "responseTimestamp": "2024-08-29 17:01",
             "responseHeaders": {
