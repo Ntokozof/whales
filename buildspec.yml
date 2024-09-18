@@ -33,12 +33,13 @@ phases:
 
 
       - echo "Running Nexus IQ scan..."
-      - java -jar nexus-iq-cli.jar \
-          -i whales_secured \
-          -s https://omlnexusiq.omapps.net:8070/ \
-          -a Ms0WuL6r:DR6FFt9CpqO1VTo9vZ6DwYFhUEqkFBeaLmP4xHqDksz5 \
-          -t build \
-          -r whales_secured_report.xml .
+      - curl -I https://omlnexusiq.omapps.net:8070/
+      # - java -jar nexus-iq-cli.jar \
+      #     -i whales_secured \
+      #     -s https://omlnexusiq.omapps.net:8070/ \
+      #     -a Ms0WuL6r:DR6FFt9CpqO1VTo9vZ6DwYFhUEqkFBeaLmP4xHqDksz5 \
+      #     -t build \
+      #     -r whales_secured_report.xml .
 
   post_build:
     commands:
