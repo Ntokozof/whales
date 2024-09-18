@@ -35,7 +35,7 @@ phases:
       - echo "Running Nexus IQ scan..."
       - java -jar nexus-iq-cli.jar \
           -i whales_secured \
-          -s https://YOUR_NEXUS_IQ_SERVER_URL \
+          -s https://omlnexusiq.omapps.net:8070/ \
           -a Ms0WuL6r:DR6FFt9CpqO1VTo9vZ6DwYFhUEqkFBeaLmP4xHqDksz5 \
           -t build \
           -r whales_secured_report.xml .
