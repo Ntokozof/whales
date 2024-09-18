@@ -5,8 +5,9 @@ export const handler = async (event) => {
   const path = event.path;
   const httpMethod = event.httpMethod;
 
-  // Initialize response object
+  // Initialize response object ________
   let response;
+
 
   if (path === '/test001' && httpMethod === 'GET') {
     response = {
