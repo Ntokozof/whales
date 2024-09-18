@@ -8,12 +8,17 @@ phases:
       # - npm install
 
       - echo "Installing Docker and Docker Compose..."
-      - apt-get update -y
-      - apt-get install -y docker.io
-      - curl -L "https://github.com/docker/compose/releases/download/v2.20.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-      - chmod +x /usr/local/bin/docker-compose
-      - docker compose --version
-      - echo "Docker and Docker Compose installed."
+      # - apt-get update -y
+      # - apt-get install -y docker.io
+      # - curl -L "https://github.com/docker/compose/releases/download/v2.20.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+      # - chmod +x /usr/local/bin/docker-compose
+      # - docker compose --version
+      # - echo "Docker and Docker Compose installed."
+
+      - curl -o sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.6.2.2472-linux.zip
+      - unzip sonar-scanner.zip
+      - export PATH=$PATH:$(pwd)/sonar-scanner-4.6.2.2472-linux/bin
+      - sonar-scanner --version
 
       # - echo "Installing SonarQube scanner..."
       # - npm install -g sonarqube-scanner # Install the SonarQube scanner globally
