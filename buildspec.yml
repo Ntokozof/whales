@@ -24,19 +24,19 @@ phases:
       - echo "Packaging Lambda function..."
       - zip -r whales_secured.zip .
 
-      # - echo "Running SonarQube analysis..."
-      # - sonar-scanner \
-      #     -Dsonar.projectKey=whales_secured \
-      #     -Dsonar.sources=. \
-      #     -Dsonar.host.url=http://zaomrtfv005.omlams.net:9900  \
-      #     -Dsonar.login=8934107be5c8c0dba9f9b1779b9f6cc267f78f15
+      - echo "Running SonarQube analysis..."
+      - sonar-scanner \
+          -Dsonar.projectKey=whales \
+          # -Dsonar.sources=. \
+          -Dsonar.host.url=http://localhost:9001 \
+          -Dsonar.login=sqp_bb0df34ea9deab512634758e4bda45cff91f006b
 
 
       - echo "Running Nexus IQ scan..."
       # - curl -I 10.128.101.232
-      - java -jar nexus-iq-cli.jar \
-          -i whales_secured \
-          -s https://omlnexusiq.omapps.net:8070/
+      # - java -jar nexus-iq-cli.jar \
+      #     -i whales_secured \
+      #     -s https://omlnexusiq.omapps.net:8070/
       #     -a Ms0WuL6r:DR6FFt9CpqO1VTo9vZ6DwYFhUEqkFBeaLmP4xHqDksz5 \
       #     -t build \
       #     -r whales_secured_report.xml .
