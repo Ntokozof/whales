@@ -50,6 +50,7 @@ phases:
       - zip -r whales_secured.zip .
 
       # - echo "Running SonarQube analysis..."
+      - cd /codebuild/output/src1361678487/src/github.com/Ntokozof/whales ls -l
       - mvn clean verify sonar:sonar \
           -Dsonar.projectKey=whales \
           -Dsonar.host.url=http://localhost:9001 \
