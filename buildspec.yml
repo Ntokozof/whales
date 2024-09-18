@@ -27,9 +27,8 @@ phases:
       - echo "Running SonarQube analysis..."
       - sonar-scanner \
           -Dsonar.projectKey=whales \
-          # -Dsonar.sources=. \
-          # -Dsonar.host.url=http://localhost:9001 \
-          # -Dsonar.login=sqp_bb0df34ea9deab512634758e4bda45cff91f006b
+          -Dsonar.host.url=http://localhost:9001 \
+          -Dsonar.login=sqp_bb0df34ea9deab512634758e4bda45cff91f006b
 
 
       - echo "Running Nexus IQ scan..."
