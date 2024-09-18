@@ -1,4 +1,8 @@
 version: 0.2
+env:
+  variables:
+    DOCKERHUB_USERNAME: "fthwala2@oldmutual.com"
+    DOCKERHUB_PASSWORD: "Thwalafelix19**"
 phases:
   install:
     runtime-versions:
@@ -14,6 +18,9 @@ phases:
       # - chmod +x /usr/local/bin/docker-compose
       # - docker compose --version
       # - echo "Docker and Docker Compose installed."
+
+      - echo "Logging in to Docker Hub..."
+      - echo "$DOCKERHUB_PASSWORD" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
 
       - curl -o sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.6.2.2472-linux.zip
       - unzip sonar-scanner.zip
