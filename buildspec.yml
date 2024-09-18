@@ -25,7 +25,7 @@ phases:
       - zip -r whales_secured.zip .
 
       - echo "Running SonarQube analysis..."
-      - sonar-scanner \
+      - mvn clean verify sonar:sonar \
           -Dsonar.projectKey=whales \
           -Dsonar.host.url=http://localhost:9001 \
           -Dsonar.login=sqp_bb0df34ea9deab512634758e4bda45cff91f006b
