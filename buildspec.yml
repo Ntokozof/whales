@@ -32,11 +32,10 @@ phases:
     commands:
       - echo "Running pre-build steps..."   
 
-      commands:
-        - echo "Starting Docker services for SonarQube..."
-        - docker-compose up -d
-        - echo "Waiting for SonarQube to be ready..."
-        - sleep 60
+      - echo "Starting Docker services for SonarQube..."
+      - docker-compose up -d
+      - echo "Waiting for SonarQube to be ready..."
+      - sleep 60
 
   build:
     commands:
