@@ -7,17 +7,69 @@ phases:
       - echo "Installing dependencies..."
       # - npm install
 
-      - echo "Installing SonarQube scanner..."
-      - npm install -g sonarqube-scanner # Install the SonarQube scanner globally
-      - echo "SonarQube scanner installed."
+      - echo "Installing Docker and Docker Compose..."
+      - yum update -y
+      - amazon-linux-extras install docker -y
+      - service docker start
+      - curl -L "https://github.com/docker/compose/releases/download/v2.20.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+      - chmod +x /usr/local/bin/docker-compose
+      - docker-compose --version
+      - echo "Docker and Docker Compose installed."
 
-      - echo "Installing Nexus IQ CLI..."
-      - curl -L https://download.sonatype.com/clm/scanner/nexus-iq-cli-1.138.0.jar -o nexus-iq-cli.jar # Download Nexus IQ CLI
-      - echo "Nexus IQ CLI installed."
+      # - echo "Installing SonarQube scanner..."
+      # - npm install -g sonarqube-scanner # Install the SonarQube scanner globally
+      # - echo "SonarQube scanner installed."
+
+      # - echo "Installing Nexus IQ CLI..."
+      # - curl -L https://download.sonatype.com/clm/scanner/nexus-iq-cli-1.138.0.jar -o nexus-iq-cli.jar # Download Nexus IQ CLI
+      # - echo "Nexus IQ CLI installed."
       
   pre_build:
     commands:
       - echo "Running pre-build steps..."   
+
+      - echo "Pulling and starting SonarQube using Docker Compose..."
+      - |
+        echo '
+        version: "3"
+        services:
+          sonarqube:
+            image: sonarqube:lts-community
+            environment:
+              SONAR_JDBC_URL: jdbc:postgresql://sonar_db:5432/sonar
+              SONAR_JDBC_USERNAME: sonar
+              SONAR_JDBC_PASSWORD: sonar
+            ports:
+              - "9001:9000"
+            volumes:
+              - sonarqube_conf:/opt/sonarqube/conf
+              - sonarqube_data:/opt/sonarqube/data
+              - sonarqube_extensions:/opt/sonarqube/extensions
+              - sonarqube_logs:/opt/sonarqube/logs
+              - sonarqube_temp:/opt/sonarqube/temp
+          
+          sonar_db:
+            image: postgres:13
+            environment:
+              POSTGRES_USER: sonar
+              POSTGRES_PASSWORD: sonar
+              POSTGRES_DB: sonar
+            volumes:
+              - sonar_db:/var/lib/postgresql
+              - sonar_db_data:/var/lib/postgresql/data
+
+        volumes:
+          sonarqube_conf:
+          sonarqube_data:
+          sonarqube_extensions:
+          sonarqube_logs:
+          sonarqube_temp:
+          sonar_db:
+          sonar_db_data:
+        ' > docker-compose.yml
+      - docker-compose up -d
+      - echo "Waiting for SonarQube to start..."
+      - sleep 60 # wait for SonarQube to fully initialize
 
   build:
     commands:
@@ -26,12 +78,12 @@ phases:
 
       # - echo "Running SonarQube analysis..."
       - sonar-scanner \
-          -Dsonar.projectKey=whales_secured \
+          -Dsonar.projectKey=whales \
           -Dsonar.host.url=http://localhost:9001 \
           -Dsonar.login=sqp_bb0df34ea9deab512634758e4bda45cff91f006b
 
 
-      - echo "Running Nexus IQ scan..."
+      # - echo "Running Nexus IQ scan..."
       # - curl -I 10.128.101.232
       # - java -jar nexus-iq-cli.jar \
       #     -i whales_secured \
