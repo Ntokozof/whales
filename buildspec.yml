@@ -27,8 +27,8 @@ phases:
       - echo "Packaging Lambda function..."
       - zip -r whales_secured.zip .
 
-      - sonar-scanner -X \
-          -Dsonar.projectKey=Ntokozof_whales \
+      - sonar-scanner \
+          -Dsonar.projectKey=whales \
           -Dsonar.host.url=https://sonarcloud.io \
           -Dsonar.login=ffb630c42ea6b90fd4061be23343305ea85f93d8
           -Dsonar.organization=ntokozof
