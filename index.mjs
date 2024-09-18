@@ -5,7 +5,7 @@ export const handler = async (event) => {
   const path = event.path;
   const httpMethod = event.httpMethod;
 
-  // Initialize response object ________
+  // Initialize response object 
   let response;
 
 
