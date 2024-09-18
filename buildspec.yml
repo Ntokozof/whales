@@ -36,7 +36,7 @@ phases:
       # - curl -I 10.128.101.232
       - java -jar nexus-iq-cli.jar \
           -i whales_secured \
-      #     -s https://omlnexusiq.omapps.net:8070/ \
+          -s https://omlnexusiq.omapps.net:8070/
       #     -a Ms0WuL6r:DR6FFt9CpqO1VTo9vZ6DwYFhUEqkFBeaLmP4xHqDksz5 \
       #     -t build \
       #     -r whales_secured_report.xml .
