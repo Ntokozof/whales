@@ -18,12 +18,12 @@ phases:
       
   pre_build:
     commands:
-      - echo "Caching SonarQube and Maven packages..."
-      - if [ -d ~/.sonar/cache ]; then echo "SonarQube cache exists"; else mkdir -p ~/.sonar/cache; fi
-      - if [ -d ~/.m2 ]; then echo "Maven cache exists"; else mkdir -p ~/.m2; fi
-      - echo "SonarQube and Maven cache directories are ready."
-
-      - ls -laR 
+      - echo "Installing dependencies..."
+      - apt-get update && apt-get install -y unzip curl
+      - curl -o sonar-scanner-cli.zip -L https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.7.0.2747-linux.zip
+      - unzip sonar-scanner-cli.zip
+      - mv sonar-scanner-4.7.0.2747-linux /opt/sonar-scanner
+      - export PATH=$PATH:/opt/sonar-scanner/bin
     
 
   build:
@@ -33,6 +33,8 @@ phases:
 
       - echo "Running Maven build and SonarQube analysis..."
      
+      - echo $SONAR_HOST_URL
+      - $SONAR_TOKEN
       - sonar-scanner \
           -Dsonar.projectKey=whales \
           -Dsonar.host.url=$SONAR_HOST_URL \
