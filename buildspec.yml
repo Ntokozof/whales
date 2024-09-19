@@ -32,8 +32,8 @@ phases:
       - echo "Running Maven build and SonarQube analysis..."
       - ls
       - pwd
-      - ls ../github.com/Ntokozof/src/
-      - cp -rf ../github.com/Ntokozof/src/pom.xml .
+      - ls ../Ntokozof/github.com/src
+      - cp -rf ../Ntokozof/github.com/src/pom.xml .
       - ls 
       - mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
           -Dsonar.projectKey=whales \
