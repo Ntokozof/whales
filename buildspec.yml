@@ -37,8 +37,8 @@ phases:
       - echo $SONAR_TOKEN
       - sonar-scanner \
           -Dsonar.projectKey=whales \
-          -Dsonar_host_url=$SONAR_HOST_URL \
-          -Dsonar.login=$SONAR_TOKEN
+          # -Dsonar_host_url=$SONAR_HOST_URL \
+          # -Dsonar.login=$SONAR_TOKEN
       - echo "Build and SonarQube analysis completed."
 
   
