@@ -22,6 +22,8 @@ phases:
       - if [ -d ~/.sonar/cache ]; then echo "SonarQube cache exists"; else mkdir -p ~/.sonar/cache; fi
       - if [ -d ~/.m2 ]; then echo "Maven cache exists"; else mkdir -p ~/.m2; fi
       - echo "SonarQube and Maven cache directories are ready."
+
+      - ls -laR 
     
 
   build:
