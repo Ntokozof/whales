@@ -32,7 +32,7 @@ phases:
       - echo "Running Maven build and SonarQube analysis..."
       - ls
       - pwd
-      - ls ../Ntokozof/github.com/src
+      # - ls ../Ntokozof/github.com/src/
       - cp -rf ../Ntokozof/github.com/src/pom.xml .
       - ls 
       - mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
