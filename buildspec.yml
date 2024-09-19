@@ -32,20 +32,8 @@ phases:
       - zip -r whales_secured.zip .
 
       - echo "Running Maven build and SonarQube analysis..."
-      - ls
-      - pwd
-      # - ls ../Ntokozof/github.com/src/
-      # - cp -rf ../Ntokozof/github.com/src/pom.xml .
-      - cd ..
-      - pwd
-      - ls 
-      - cd ..
-      - pwd
-      - ls
-      - cd ..
-      - pwd
-      - ls
-      - mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
+     
+      - sonar-scanner \
           -Dsonar.projectKey=whales \
           -Dsonar.host.url=$SONAR_HOST_URL \
           -Dsonar.login=$SONAR_TOKEN
