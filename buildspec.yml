@@ -2,8 +2,8 @@ version: 0.2
 env:
   variables:
     GITHUB_TOKEN: "your-secrets-manager-key"  # Replace with your actual Secrets Manager key for GITHUB_TOKEN
-    SONAR_TOKEN: "your-secrets-manager-key"   # Replace with your actual Secrets Manager key for SONAR_TOKEN
-    SONAR_HOST_URL: "your-secrets-manager-key" # Replace with your actual Secrets Manager key for SONAR_HOST_URL
+    SONAR_TOKEN: "sqp_c3738b0e4478ac5889bd680c798150750e0b06a8"   # Replace with your actual Secrets Manager key for SONAR_TOKEN
+    SONAR_HOST_URL: "http://localhost:9001" # Replace with your actual Secrets Manager key for SONAR_HOST_URL
 phases:
   install:
     runtime-versions:
