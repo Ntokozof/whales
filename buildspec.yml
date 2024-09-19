@@ -34,7 +34,7 @@ phases:
       - echo "Running Maven build and SonarQube analysis..."
      
       - echo $SONAR_HOST_URL
-      - $SONAR_TOKEN
+      - echo $SONAR_TOKEN
       - sonar-scanner \
           -Dsonar.projectKey=whales \
           -Dsonar.host.url=$SONAR_HOST_URL \
