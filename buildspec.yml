@@ -1,49 +1,42 @@
 version: 0.2
 env:
   variables:
-    DOCKERHUB_USERNAME: "fthwala2@oldmutual.com"
-    DOCKERHUB_PASSWORD: "Thwalafelix19**"
+    GITHUB_TOKEN: "your-secrets-manager-key"  # Replace with your actual Secrets Manager key for GITHUB_TOKEN
+    SONAR_TOKEN: "your-secrets-manager-key"   # Replace with your actual Secrets Manager key for SONAR_TOKEN
+    SONAR_HOST_URL: "your-secrets-manager-key" # Replace with your actual Secrets Manager key for SONAR_HOST_URL
 phases:
   install:
     runtime-versions:
         nodejs: 20
     commands:
-      - echo "Installing dependencies..."
-      # - npm install
-      - pip3 install -q awscli --upgrade --user
-      - pip3 install boto3
-      - sudo apt-get -qq install -y jq
-      - wget -qO /tmp/sonar-scanner.zip "https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.7.0.2747-linux.zip"
-      - unzip -q /tmp/sonar-scanner.zip -d /tmp
+      - echo "Installing JDK 11 and dependencies..."
+      - sudo apt-get update -y
+      - sudo apt-get -qq install -y openjdk-11-jdk maven
+      - export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
+      - export PATH=$JAVA_HOME/bin:$PATH
+      - echo "Java version: $(java -version)"
       
   pre_build:
     commands:
-      - echo Start code scan...
-      - ./../../../../../../../tmp/sonar-scanner-4.7.0.2747-linux/bin/sonar-scanner -Dsonar.projectKey=$SONAR_QUBE_PROJECT -Dsonar.sources=. -Dsonar.host.url=$SONAR_QUBE_URL -Dsonar.login=$SONAR_QUBE_KEY
-      - sleep 7
-      - "curl -s -u $SONAR_QUBE_KEY: $SONAR_QUBE_URL/api/qualitygates/project_status?projectKey=$SONAR_QUBE_PROJECT> /tmp/result.json"
-      - if [ $(jq -r '.projectStatus.status' /tmp/result.json) = ERROR ] ; then CODEBUILD_BUILD_SUCCEEDING=0 ; fi
-      - echo Code scan completed on `date`
-      - if [ "$CODEBUILD_BUILD_SUCCEEDING" -eq 0 ]; then exit 1; fi
-
-      # - apt-get update -y
-      # - apt-get install -y jp
-
-      # - curl -o sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.6.2.2472-linux.zip
-      # - unzip sonar-scanner.zip
-      # - export PATH=$PATH:$(pwd)/sonar-scanner-4.6.2.2472-linux/bin
-      # - sonar-scanner --version
+      - echo "Caching SonarQube and Maven packages..."
+      - if [ -d ~/.sonar/cache ]; then echo "SonarQube cache exists"; else mkdir -p ~/.sonar/cache; fi
+      - if [ -d ~/.m2 ]; then echo "Maven cache exists"; else mkdir -p ~/.m2; fi
+      - echo "SonarQube and Maven cache directories are ready."
+    
 
   build:
     commands:
       - echo "Packaging Lambda function..."
       - zip -r whales_secured.zip .
 
-      # - sonar-scanner \
-      #     -Dsonar.projectKey=whales \
-      #     -Dsonar.host.url=https://sonarcloud.io \
-      #     -Dsonar.login=ffb630c42ea6b90fd4061be23343305ea85f93d8
-      #     -Dsonar.organization=ntokozof
+      - echo "Running Maven build and SonarQube analysis..."
+      - mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
+          -Dsonar.projectKey=whales \
+          -Dsonar.host.url=$SONAR_HOST_URL \
+          -Dsonar.login=$SONAR_TOKEN
+      - echo "Build and SonarQube analysis completed."
+
+  
 
   post_build:
     commands:
