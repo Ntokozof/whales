@@ -11,10 +11,10 @@ phases:
       - echo "Installing dependencies..."
       # - npm install
       - pip3 install -q awscli --upgrade --user
-            - pip3 install boto3
-            - yum -q install -y jq
-            - wget -qO /tmp/sonar-scanner.zip "https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.7.0.2747-linux.zip"
-            - unzip -q /tmp/sonar-scanner.zip -d /tmp
+      - pip3 install boto3
+      - yum -q install -y jq
+      - wget -qO /tmp/sonar-scanner.zip "https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.7.0.2747-linux.zip"
+      - unzip -q /tmp/sonar-scanner.zip -d /tmp
       
   pre_build:
     commands:
